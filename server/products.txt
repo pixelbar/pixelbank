@@ -1,0 +1,195 @@
+# Foodz
+8710398502599		0.60	  Lays Bugles Nacho
+8710398502452		0.60	  Lays Wokkels Paprika
+8710398510112		0.60	  Lays Wokkels Paprika 2
+
+8710398604637		0.60	  Lays Cheese Onion
+8710398601667		0.60	  Lays Super Paprika
+8710398604620		0.60	  Lays Bolognese
+8710398601650		0.60	  Lays Superchips Naturel
+5053990107339		0.80	  Pringles Original
+5053990107308		0.80	  Pringles Paprika
+5053990107384		0.80	  Pringles Zure Room
+5053990107292           0.80      Pringles Hot & Spicy
+5000159418546		0.60	  Balisto Muesli
+5000159408301		0.70	  Mars Tupack
+5000159304245		0.60	  M&M Crispr
+40111490                0.60      M&M Chocolat
+8593893711358		0.60	  Bro melk
+5000159459228		0.60	  Twix Single
+5000159461122		0.60	  Snikkers
+7613032625474           0.60      Lion
+7613032630409           0.60      Lion White
+5000159407236           0.60      Mars
+40111445		0.60	  M&M nootjes
+40111650                0.40      MilkyWay Crispy Rolls
+3800020436677		0.60	  Kitkat Chunky
+worstenbroodje		0.30      Worstenbroodje
+broodje			0.60      Worstenbroodje
+8710398502667           0.60      Lacy Hamkas
+8710398164216           0.60      Lacy Patatje Joppie
+8710398602039           0.60      Doritos
+saus                    8.00      Simon's hot sauce
+40084107                0.90      Ueberraschungsei
+8710398169686           0.70      Borrelnotjes
+5000189976719           0.50      Caramac
+8710908979231           0.45      Cup a Soup Paprica
+8710908975332           0.45      Cup a Soup Champion
+8710908977275           0.45      Cup a Soup Kip
+
+
+
+
+
+
+ 
+
+
+## Drinkz
+
+4029764001807           1.25      Club-Mate
+4029764001401           1.25      Club-Mate Granat
+4029764001883           1.50      Club-Mate Cola
+4260031874056           1.50      Club-Mate Flora Power
+4029764001814           1.25      Club-Mate Ice-T
+
+1094922319639		1.20	  Hausmarke cola trifft kaffee
+1094922076303           1.20      Hausmarke cola trifft lakritz
+4260107220015           1.20      Fritz-Kola
+# 90357725                0.60      Coca Cola Zero
+5449000011527           0.80      Fanta 330ml
+5449000000996           0.80      Coke 330ml
+5449000050205           0.80      Cola-Light
+8711200175307           0.80      Ice-Tea Green 330ml
+# 5410013113003           0.45      Spa Rood 330ml
+8715600237054           1.00      Sourcy Vitamin water Framboos-Granaatappel 330ml
+8711576146543           0.25      ARO Koolzuurvrij water 500ml
+4002846034603           2.00      MioMioMate Ginger
+4002846034559           2.00      MioMioMate Banana
+# 87156638		0.50	  Royal Club
+8715600171921		0.50	  Royal Club
+# 87156386		0.50	  Royal Club
+# 87156249		0.50	  Royal Club
+5449000131805		0.80	  Coca Zero
+5449000111678		0.50	  Chaudfontaine
+5410013113003		0.50	  Spa I N T E N S E
+# 8713500023074		0.60	  Hero
+# 8713500023067		0.60	  Hero
+# 8713500025207		0.60	  Hero
+
+8713500025207           0.60      Hero Cassis 250ml
+8713500023074           0.60      Hero Appel 250ml
+8713500023067           0.60      Hero Sinaasappel 250ml
+
+87156386                0.60      Royal Club Tonic 330ml
+87156638                0.60      Royal Club Ginger Ale 330ml
+87156249                0.60      Royal Club Bitter Lemon 330ml
+
+8710956001151           1.00      Hertog Jan Bier
+87167160                1.00      Grolsch Bier
+41030806                1.50      Flensburger Pils
+4004078004508           2.50      Einbecker Mai Ur-Bock
+1094922076266           1.50      Hermann Kola
+1094922076228           1.50      Hermann Brause Orange
+1094922076235           1.50      Hermann Brause Melone
+1094922075450           1.50      Hermann Strawberry Rhabarbar
+1094922076242           1.50      Herrman Apfelschorle
+1094922076211           1.50      Herrmann Zitrone
+1094922076259           1.50      Herrmann Apfel Kirsch Schorle
+87156485                0.45      Sourcy Sprankelend
+87156164                0.45      Sourcy Naturel
+8714100616963           0.80      Lipton Original
+54490000                0.80      Coke 200ml
+90357725                0.80      Coke zero 200ml 
+4004866721556           2.50      Hacker Pschorr Muenchner Hell
+# 4004866721204           2.50      Hacker Pschorr Kellerbier
+41030837                2.50      Flensburger Pils 0.5l
+41016916                2.50      Kulmbacher Edelherb 0.5l
+4008948027000           2.50      Jever Pilsener 0.5l
+# 4105250022003           2.50      Augustiner Helles
+4006298002104           2.50      Tucher Urbraeu
+4006298013704           2.50      Tucher Nuernberger Rotbier
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Spezialbier
+
+87232295                1.50      Brand Sasion
+5410228213185           1.50      Jupiler Blonde
+87167207                1.50      Grolsch Lentebock
+87306408                0.80      Hertog Jan Tiny
+8717545260029           2.50      Brouwerij'Tij Natte
+8718868545022           2.50      Kees Farmhouse IPA
+8717545260067           2.50      Brouwerij'Tij IJwit
+8717545260043           2.50      Brouwerij'Tij IPA
+8718868545466           2.50      Kees Session IPA
+8717624423154           2.50      DeMolen Hop & Liefde
+8717624421037           2.50      DeMolen Vuur & Vlam
+8717545260289           2.50      Brouwerij'Tij Flink
+8717624425004           2.50      Kaapse Brouwers Harrie Sasion
+8717624425011           2.50      Kaapse Brouwers Karel American Bitter
+4004078004201           2.00      Einbecker Brauherren Pils
+41051825                2.00      Rothaus Tannzaepfle
+4105250022003           2.50      AugustinerBraeu Helles
+4105250024007           2.50      AugustinerBraeu Export Edelstoff
+4103930310129           2.50      Altenmuenster Hopfig Herb
+4082100002227           2.50      Moenshof Maerzen
+4082100002258           2.50      Moenshof Zoigl
+4005154011243           2.50      Arcobraeu Moos Helles
+4004866721204           2.50      Hacker-Pschorr Kellerbier
+8711406010099           2.50      La Trappe Tripel
+8717624420726           2.50      DeMolen Quirks & Quinine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Grootverpakkingen
+
+0000000000000           21.00     Club-Mate Krat Incl. 4.5 EUR statiegeld
+0001                    16.50     Club-Mate Krat Excl. 4.5 Eur statiegeld
+0000000000001           26.00     Flora Power Krat Incl. 4.5 EUR statiegeld
+0000000000002           22.00     Club-Mate Granat Krat Incl. 4.5 EUR statiegeld
+0000000000003           21.50     Club-Mate Ice-T Krat Incl. 4.5 EUR statiegeld
+0000000000004           21.00     Club-Mate Cola Krat Incl. 4,5 EUR statiegeld
+
+0000000000011           21.00     Hermann-Kola
+0000000000012           22.00     Hermann-Orange
+0000000000013           21.00     Hermann-Melone
+0000000000014           26.00     Hermann-Rhabarber Erd
+
+
+## Overig
+
+8710552581330           2.00      Glassex Glas Reiniger 750ml
