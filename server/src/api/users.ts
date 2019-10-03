@@ -1,5 +1,7 @@
-import { Express, Request, Response, NextFunction } from "express";
-import { get_connection } from "../database";
+import { Express, Request, Response } from "express";
+import { extract_request_object as request_body_contains_fields } from "../utils";
+import { DI } from "../database";
+import { User } from "../models/user";
 
 export function configure(e: Express) {
     e.route("/api/users/")
@@ -10,30 +12,22 @@ export function configure(e: Express) {
         .get(get_user_by_name);
 }
 
-async function get_user_list(_: Request, res: Response) {
-    let client = await get_connection();
-    try {
-        let result = await client.query("SELECT * FROM \"user\"");
-        res.json(result.rows);
-    } catch (e) {
-        res.status(500).json(e);
-    } finally {
-        client.release();
-    }
+async function get_user_list(req: Request, res: Response) {
+    const users = await DI.userRepository.findAll();
+    res.json(users);
 }
 
-function create_user(req: Request, res: Response, next: NextFunction) {
+async function create_user(req: Request, res: Response) {
+    if (!request_body_contains_fields(req, res, ["name"])) return;
+    const user = new User(req.body.name);
+    await DI.userRepository.persistAndFlush(user);
 
+    res.json({ success: true, user });
 }
 
-async function get_user_by_name(req: Request, res: Response, next: NextFunction) {
-    let client = await get_connection();
-    try {
-        let result = await client.query("SELECT * FROM \"user\" where name = $1", [req.params.name]);
-        res.json(result.rows[0]);
-    } catch (e) {
-        res.status(500).json(e);
-    } finally {
-        client.release();
-    }
+async function get_user_by_name(req: Request, res: Response) {
+    const name = req.params.name;
+    if (!name) return res.json({ success: false, message: "Missing parameter 'name'" });
+    const user = await DI.userRepository.findOne({ name: name });
+    return res.json({ success: !!user, user });
 }

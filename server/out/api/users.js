@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("../utils");
 const database_1 = require("../database");
+const user_1 = require("../models/user");
 function configure(e) {
     e.route("/api/users/")
         .get(get_user_list);
@@ -10,31 +12,21 @@ function configure(e) {
         .get(get_user_by_name);
 }
 exports.configure = configure;
-async function get_user_list(_, res) {
-    let client = await database_1.get_connection();
-    try {
-        let result = await client.query("SELECT * FROM \"user\"");
-        res.json(result.rows);
-    }
-    catch (e) {
-        res.status(500).json(e);
-    }
-    finally {
-        client.release();
-    }
+async function get_user_list(req, res) {
+    const users = await database_1.DI.userRepository.findAll();
+    res.json(users);
 }
-function create_user(req, res, next) {
+async function create_user(req, res) {
+    if (!utils_1.extract_request_object(req, res, ["name"]))
+        return;
+    const user = new user_1.User(req.body.name);
+    await database_1.DI.userRepository.persistAndFlush(user);
+    res.json({ success: true, user });
 }
-async function get_user_by_name(req, res, next) {
-    let client = await database_1.get_connection();
-    try {
-        let result = await client.query("SELECT * FROM \"user\" where name = $1", [req.params.name]);
-        res.json(result.rows[0]);
-    }
-    catch (e) {
-        res.status(500).json(e);
-    }
-    finally {
-        client.release();
-    }
+async function get_user_by_name(req, res) {
+    const name = req.params.name;
+    if (!name)
+        return res.json({ success: false, message: "Missing parameter 'name'" });
+    const user = await database_1.DI.userRepository.findOne({ name: name });
+    return res.json({ success: !!user, user });
 }
