@@ -23,5 +23,3 @@ export class Product {
     }
 }
 
-export interface Product { }
-

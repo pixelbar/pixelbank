@@ -3,6 +3,7 @@ import { config as dotenv_config } from "dotenv";
 import { Express } from "express";
 import { User } from "./models/user";
 import { Product } from "./models/product";
+import { Payment } from "./models/payment";
 import { readFile, unlink } from "fs";
 
 export async function configure(app: Express) {
@@ -91,9 +92,11 @@ export const DI = {} as {
     em: EntityManager,
     userRepository: EntityRepository<User>,
     productRepository: EntityRepository<Product>,
+    paymentRepository: EntityRepository<Payment>,
 };
 
 function configureDIRepositories() {
     DI.userRepository = DI.orm.em.getRepository(User);
     DI.productRepository = DI.orm.em.getRepository(Product);
+    DI.paymentRepository = DI.orm.em.getRepository(Payment);
 }
