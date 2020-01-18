@@ -1,28 +1,43 @@
-import { MikroORM, RequestContext, EntityManager, EntityRepository } from "mikro-orm";
+import { MikroORM, RequestContext, EntityManager, EntityRepository, Options as MikroOptions } from "mikro-orm";
 import { config as dotenv_config } from "dotenv";
 import { Express } from "express";
 import { User } from "./models/user";
 import { Product } from "./models/product";
-import { readFile } from "fs";
+import { readFile, unlink } from "fs";
 
 export async function configure(app: Express) {
     dotenv_config();
 
+    let config: MikroOptions;
+    let force_reseed = false;
     if (!process.env.DATABASE_URL) {
-        console.log("Could not start server");
         console.log("Missing .env variable DATABASE_URL");
-        process.exit(-1);
+        console.log("Will use a temporary sqlite database. This should not be used in production");
+
+        await new Promise((res) => unlink("pixelbank.sqlite", res));
+
+        config = {
+            entitiesDirs: ['./models'],
+            entitiesDirsTs: ['../src/models'],
+            baseDir: __dirname,
+            autoFlush: false,
+            type: 'sqlite',
+            dbName: 'pixelbank.sqlite'
+        };
+        force_reseed = true;
+    } else {
+        config = {
+            entitiesDirs: ['./models'],
+            entitiesDirsTs: ['../src/models'],
+            baseDir: __dirname,
+            autoFlush: false,
+            dbName: 'pixelbank',
+            type: 'postgresql',
+            clientUrl: process.env.DATABASE_URL,
+        };
     }
 
-    const orm = await MikroORM.init({
-        entitiesDirs: ['./models'],
-        entitiesDirsTs: ['../src/models'],
-        dbName: 'pixelbank',
-        type: 'postgresql',
-        clientUrl: process.env.DATABASE_URL,
-        baseDir: __dirname,
-        autoFlush: false,
-    });
+    const orm = await MikroORM.init(config);
 
     DI.orm = orm;
     DI.em = DI.orm.em;
@@ -32,9 +47,19 @@ export async function configure(app: Express) {
     app.use((req, res, next) => {
         RequestContext.create(DI.orm.em, next);
     });
+
+    if (force_reseed) {
+        await seed();
+    }
 }
 
 export async function seed() {
+    const generator = DI.orm.getSchemaGenerator();
+    console.log("Updating schema...");
+    await generator.updateSchema();
+
+    console.log("Filling products...");
+
     const file: string = await new Promise((res, rej) => {
         readFile("products.txt", { encoding: "UTF8" }, (err, data) => {
             if (err) rej(err);
@@ -55,7 +80,6 @@ export async function seed() {
         let code = parts[0];
         let price = parseFloat(parts[1]);
         let name = parts[2];
-        console.log(JSON.stringify({ code, price, name }));
 
         await DI.productRepository.persist(new Product(code, name, price));
     }

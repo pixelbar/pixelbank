@@ -29,5 +29,5 @@ async function get_user_by_name(req: Request, res: Response) {
     const name = req.params.name;
     if (!name) return res.json({ success: false, message: "Missing parameter 'name'" });
     const user = await DI.userRepository.findOne({ name: name });
-    return res.json({ success: !!user, user });
+    return res.json({ success: user != null, user });
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryKey, Property, IEntity } from "mikro-orm";
+import { Entity, PrimaryKey, Property } from "mikro-orm";
+import uuid from "uuid/v4";
 
 @Entity()
 export class User {
@@ -12,9 +13,10 @@ export class User {
     balance: number;
 
     constructor(name: string) {
+        this.id = uuid();
         this.name = name;
     }
 }
 
-export interface User extends IEntity { }
+export interface User { }
 
