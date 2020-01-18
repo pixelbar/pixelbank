@@ -3,14 +3,16 @@ import * as colors from "colors/safe";
 import { api } from "./api";
 import { state } from "./state";
 
-function prompt_input() {
-    prompt("Product ID, amount or command: ").then(async input => {
-        await handle_input(input);
-        prompt_input();
-    }).catch(e => {
-        console.log(colors.red(e));
-        prompt_input();
-    })
+async function prompt_input() {
+    console.log(process.env);
+    while (true) {
+        try {
+            const input = await prompt("Product ID, amount or command: ");
+            await handle_input(input);
+        } catch (e) {
+            console.log(colors.red(e));
+        }
+    }
 }
 
 async function handle_input(input: string) {

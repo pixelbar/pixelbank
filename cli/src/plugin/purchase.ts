@@ -33,7 +33,7 @@ export class Purchase extends Plugin {
             .reduce((max_length, product) => Math.max(product.name.length, max_length), 0)
             + 5;
         for (const product of this.products) {
-            console.log(product.name.padEnd(longest_name) + " \u20AC " + product.price);
+            console.log(product.name.padEnd(longest_name) + " \u20AC " + product.price.toFixed(2));
         }
     }
 }
