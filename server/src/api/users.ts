@@ -20,7 +20,7 @@ async function getUserByName(req: Request, res: Response): Promise<Response> {
   const name = req.params.name
   if (!name) return res.json({ success: false, message: "Missing parameter 'name'" })
   const user = await DI.userRepository.findOne({ name: name })
-  return res.json({ success: !!user, user })
+  return res.json({ success: user != null, user })
 }
 
 export function configure(e: Express): void {

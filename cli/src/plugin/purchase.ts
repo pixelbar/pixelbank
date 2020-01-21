@@ -31,7 +31,7 @@ export class Purchase extends Plugin {
   printSummary(): void {
     const longestName = this.products.reduce((maxLength, product) => Math.max(product.name.length, maxLength), 0) + 5
     for (const product of this.products) {
-      console.log(product.name.padEnd(longestName) + ' \u20AC ' + product.price)
+      console.log(product.name.padEnd(longestName) + ' \u20AC ' + product.price.toFixed(2))
     }
   }
 }

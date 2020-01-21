@@ -28,16 +28,16 @@ async function handleInput(input: string): Promise<void> {
   console.log('Error; Unknown command')
 }
 
-function promptInput(): void {
-  prompt('Product ID, amount or command: ')
-    .then(async input => {
+async function promptInput(): Promise<void> {
+  console.log(process.env)
+  while (true) {
+    try {
+      const input = await prompt('Product ID, amount or command: ')
       await handleInput(input)
-      promptInput()
-    })
-    .catch(e => {
+    } catch (e) {
       console.log(colors.red(e))
-      promptInput()
-    })
+    }
+  }
 }
 
 promptInput()

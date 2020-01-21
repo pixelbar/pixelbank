@@ -1,10 +1,11 @@
-import * as express from 'express'
-import * as cors from 'cors'
+import express from 'express'
+import cors from 'cors'
 import { configure as databaseConfigure, seed as seedDatabase } from './database'
 import { configure as apiUsersConfigure } from './api/users'
 import { configure as apiProductsConfigure } from './api/products'
 
 const app = express()
+
 console.log('Configuring database...')
 databaseConfigure(app).then(() => {
   if (process.argv.some(a => a == '--seed')) {
