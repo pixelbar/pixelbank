@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "prestart": "tsc",
-    "start": "node out/index.js"
+    "start": "node out/index.js",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
