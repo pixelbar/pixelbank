@@ -1,20 +1,19 @@
-import { Entity, PrimaryKey, Property, IEntity } from "mikro-orm";
+import { Entity, PrimaryKey, Property, IEntity } from 'mikro-orm'
 
 @Entity()
 export class User {
-    @PrimaryKey()
-    id: string;
+  @PrimaryKey()
+  id: string
 
-    @Property()
-    name: string;
+  @Property()
+  name: string
 
-    @Property()
-    balance: number;
+  @Property()
+  balance: number
 
-    constructor(name: string) {
-        this.name = name;
-    }
+  constructor(name: string) {
+    this.name = name
+  }
 }
 
-export interface User extends IEntity { }
-
+export type User = IEntity
