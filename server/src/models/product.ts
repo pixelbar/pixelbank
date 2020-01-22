@@ -1,25 +1,24 @@
-import { Entity, PrimaryKey, Property } from "mikro-orm";
-import uuid from "uuid/v4";
+import { Entity, PrimaryKey, Property } from 'mikro-orm';
+import uuid from 'uuid/v4';
 
 @Entity()
 export class Product {
-    @PrimaryKey()
-    id: string;
+	@PrimaryKey()
+	id: string;
 
-    @Property()
-    name: string;
+	@Property()
+	name: string;
 
-    @Property()
-    code: string;
+	@Property()
+	code: string;
 
-    @Property()
-    price: number;
+	@Property()
+	price: number;
 
-    constructor(code: string, name: string, price: number) {
-        this.id = uuid();
-        this.code = code;
-        this.name = name;
-        this.price = price;
-    }
+	constructor(code: string, name: string, price: number) {
+		this.id = uuid();
+		this.code = code;
+		this.name = name;
+		this.price = price;
+	}
 }
-
