@@ -10,7 +10,9 @@ async function getUserPayments(req: Request, res: Response): Promise<void> {
 		res.json({});
 		return;
 	}
-	const payments = await DI.paymentRepository.find({ user }, ['items'], undefined, count);
+
+	const payments = await DI.paymentRepository.find({ user }, { populate: ['items'], limit: count });
+
 	res.json({
 		user,
 		payments,
