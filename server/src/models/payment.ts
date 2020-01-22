@@ -1,6 +1,7 @@
 import { PrimaryKey, Entity, Property, ManyToOne, OneToMany, Collection } from 'mikro-orm';
 import { User } from './user';
 import { PaymentItem } from './paymentItem';
+import uuid = require('uuid');
 
 @Entity()
 export class Payment {
@@ -18,4 +19,10 @@ export class Payment {
 		item => item.payment
 	)
 	items = new Collection<PaymentItem>(this);
+
+	constructor(user: User) {
+		this.id = uuid();
+		this.user = user;
+		this.date = new Date();
+	}
 }

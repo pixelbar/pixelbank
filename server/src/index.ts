@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { configure as databaseConfigure, seed as seedDatabase } from './database';
+import { configure as apiPaymentConfigure } from './api/payment';
 import { configure as apiUsersConfigure } from './api/users';
 import { configure as apiProductsConfigure } from './api/products';
 
@@ -30,6 +31,7 @@ databaseConfigure(app).then(() => {
 
 	apiUsersConfigure(app);
 	apiProductsConfigure(app);
+	apiPaymentConfigure(app);
 	app.listen(2345);
 	console.log('Server listening on localhost:2345');
 });

@@ -5,6 +5,7 @@ import { User } from './models/user';
 import { Product } from './models/product';
 import { Payment } from './models/payment';
 import { readFile, unlink } from 'fs';
+import { PaymentItem } from './models/paymentItem';
 
 export const DI = {} as {
 	orm: MikroORM;
@@ -34,6 +35,8 @@ export async function seed(): Promise<void> {
 		});
 	});
 
+	let firstProduct: Product | null = null;
+
 	for (let line of file.split('\n')) {
 		line = line.trim();
 		if (line.length == 0 || line.startsWith('#')) continue;
@@ -51,7 +54,21 @@ export async function seed(): Promise<void> {
 		const price = parseFloat(parts[1]);
 		const name = parts[2];
 
-		await DI.productRepository.persist(new Product(code, name, price));
+		const product = new Product(code, name, price);
+		if (firstProduct === null) {
+			firstProduct = product;
+		}
+
+		await DI.productRepository.persist(product);
+	}
+
+	if (firstProduct != null) {
+		const user = new User('Trangar');
+		const payment = new Payment(user);
+		payment.items.add(new PaymentItem(payment, firstProduct));
+
+		await DI.userRepository.persist(user);
+		await DI.paymentRepository.persist(payment);
 	}
 	await DI.productRepository.flush();
 }
@@ -74,6 +91,7 @@ export async function configure(app: Express): Promise<void> {
 			autoFlush: false,
 			type: 'sqlite',
 			dbName: 'pixelbank.sqlite',
+			debug: true,
 		};
 		forceReseed = true;
 	} else {

@@ -22,5 +22,6 @@ export class User implements AnyEntity<User, 'id'> {
 	constructor(name: string) {
 		this.id = uuid();
 		this.name = name;
+		this.balance = 0;
 	}
 }
