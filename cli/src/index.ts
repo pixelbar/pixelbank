@@ -4,6 +4,11 @@ import { api } from './api';
 import { state } from './state';
 
 async function handleInput(input: string): Promise<void> {
+	if (input == 'test') {
+		await api.makePayment('Trangar', ['4029764001807', '5000159407236']);
+		return;
+	}
+
 	const product = await api.getProductById(input);
 	if (product) {
 		state.inputProduct(product);
