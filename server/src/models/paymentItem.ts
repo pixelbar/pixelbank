@@ -1,7 +1,7 @@
 import { PrimaryKey, Entity, Property, ManyToOne } from 'mikro-orm';
 import { Payment } from './payment';
 import { Product } from './product';
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 
 @Entity()
 export class PaymentItem {
@@ -24,7 +24,7 @@ export class PaymentItem {
 	productPrice: number;
 
 	constructor(payment: Payment, product: Product) {
-		this.id = uuid.v4();
+		this.id = v4();
 		this.payment = payment;
 		this.productId = product.id;
 		this.productName = product.name;

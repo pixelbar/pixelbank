@@ -5,23 +5,15 @@ import { configure as apiPaymentConfigure } from './api/payment';
 import { configure as apiUsersConfigure } from './api/users';
 import { configure as apiProductsConfigure } from './api/products';
 
-const app = express();
-
-console.log('Configuring database...');
-databaseConfigure(app).then(() => {
+async function init() {
+	const app = express();
+	console.log('Configuring database...');
+	await databaseConfigure(app)
 	if (process.argv.some((a) => a == '--seed')) {
 		console.log('Seeding database');
-		seedDatabase()
-			.then(() => {
-				console.log('Database is seeded');
-				process.exit(0);
-			})
-			.catch((e) => {
-				console.error('Could not seed database');
-				console.error(e);
-				process.exit(1);
-			});
-		return;
+		await seedDatabase();
+		console.log('Database is seeded');
+		process.exit(0);
 	}
 
 	console.log('Configuring web api...');
@@ -34,4 +26,6 @@ databaseConfigure(app).then(() => {
 	apiPaymentConfigure(app);
 	app.listen(2345);
 	console.log('Server listening on localhost:2345');
-});
+}
+
+init();

@@ -44,7 +44,7 @@ export async function seed(): Promise<void> {
 			.split(/(  |\t)/)
 			.map((v) => v.trim())
 			.filter((v) => !!v);
-		console.log(parts);
+
 		if (parts.length != 3) {
 			console.error('Could not insert');
 			continue;
@@ -73,37 +73,36 @@ export async function seed(): Promise<void> {
 	await DI.productRepository.flush();
 }
 
-export async function configure(app: Express): Promise<void> {
+export async function configure(app: Express, inMemory: boolean = false): Promise<void> {
 	dotenvConfig();
 
-	let config: MikroOptions;
 	let forceReseed = false;
-	if (!process.env.DATABASE_URL) {
+	let config: any = {
+		entitiesDirs: ['./models'],
+		entitiesDirsTs: ['../src/models'],
+		baseDir: __dirname,
+		autoFlush: false,
+	};
+
+	if (inMemory) {
+		config.type = 'sqlite';
+		config.dbName = ':memory:';
+
+		forceReseed = true;
+	} else if (!process.env.DATABASE_URL) {
 		console.log('Missing .env variable DATABASE_URL');
 		console.log('Will use a temporary sqlite database. This should not be used in production');
 
 		await new Promise((res) => unlink('pixelbank.sqlite', res));
+		config.type = 'sqlite';
+		config.dbName = 'pixelbank.sqlite';
+		config.debug = true;
 
-		config = {
-			entitiesDirs: ['./models'],
-			entitiesDirsTs: ['../src/models'],
-			baseDir: __dirname,
-			autoFlush: false,
-			type: 'sqlite',
-			dbName: 'pixelbank.sqlite',
-			debug: true,
-		};
 		forceReseed = true;
 	} else {
-		config = {
-			entitiesDirs: ['./models'],
-			entitiesDirsTs: ['../src/models'],
-			baseDir: __dirname,
-			autoFlush: false,
-			dbName: 'pixelbank',
-			type: 'postgresql',
-			clientUrl: process.env.DATABASE_URL,
-		};
+		config.type = 'postgresql';
+		config.dbName = 'pixelbank';
+		config.clientUrl = process.env.DATABASE_URL;
 	}
 
 	const orm = await MikroORM.init(config);
@@ -113,11 +112,19 @@ export async function configure(app: Express): Promise<void> {
 	configureDIRepositories();
 
 	// configure each express request to have a unique instance of MikroORM
-	app.use((req, res, next) => {
-		RequestContext.create(DI.orm.em, next);
+	app.use((_req, _res, next) => {
+		createContext(next);
 	});
 
 	if (forceReseed) {
 		await seed();
 	}
+}
+
+export function createContext(next: () => void) {
+	RequestContext.create(DI.orm.em, next);
+}
+
+export async function close() {
+	await DI.orm.close();
 }
