@@ -9,14 +9,14 @@ const app = express();
 
 console.log('Configuring database...');
 databaseConfigure(app).then(() => {
-	if (process.argv.some(a => a == '--seed')) {
+	if (process.argv.some((a) => a == '--seed')) {
 		console.log('Seeding database');
 		seedDatabase()
 			.then(() => {
 				console.log('Database is seeded');
 				process.exit(0);
 			})
-			.catch(e => {
+			.catch((e) => {
 				console.error('Could not seed database');
 				console.error(e);
 				process.exit(1);
