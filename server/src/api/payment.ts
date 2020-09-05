@@ -11,7 +11,7 @@ async function getUserPayments(req: Request, res: Response): Promise<void> {
 	const user = await DI.userRepository.findOne({ name: userName });
 	if (user == null) {
 		res.json({
-			error: `User '${userName}' not found`
+			error: `User '${userName}' not found`,
 		});
 		return;
 	}
@@ -79,7 +79,7 @@ async function addUserPayment(req: Request, res: Response): Promise<void> {
 	await payment.items.init();
 	res.json({
 		user,
-		payment
+		payment,
 	});
 }
 
