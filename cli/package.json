@@ -5,6 +5,7 @@
   "scripts": {
     "prestart": "tsc",
     "start": "node out/index.js",
+    "build": "tsc",
     "lint": "eslint . --ext .ts"
   },
   "repository": {

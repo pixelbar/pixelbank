@@ -29,7 +29,7 @@ export async function seed(): Promise<void> {
 	console.log('Filling products...');
 
 	const file: string = await new Promise((res, rej) => {
-		readFile('products.txt', { encoding: 'UTF8' }, (err, data) => {
+		readFile('products.txt', { encoding: 'utf-8' }, (err: NodeJS.ErrnoException | null, data: string) => {
 			if (err) rej(err);
 			else res(data.toString());
 		});
