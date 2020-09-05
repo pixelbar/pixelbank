@@ -73,7 +73,14 @@ export async function seed(): Promise<void> {
 	await DI.productRepository.flush();
 }
 
-export async function configure(app: Express, inMemory = false): Promise<void> {
+export function registerMiddleware(app: Express): void {
+	// configure each express request to have a unique instance of MikroORM
+	app.use((_req, _res, next) => {
+		createContext(next);
+	});
+}
+
+export async function configure(inMemory = false): Promise<void> {
 	dotenvConfig();
 
 	let forceReseed = false;
@@ -111,12 +118,6 @@ export async function configure(app: Express, inMemory = false): Promise<void> {
 	DI.orm = orm;
 	DI.em = DI.orm.em;
 	configureDIRepositories();
-
-	// configure each express request to have a unique instance of MikroORM
-	app.use((_req, _res, next) => {
-		createContext(next);
-	});
-
 	if (forceReseed) {
 		await seed();
 	}
