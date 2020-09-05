@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "mikro-orm": "^3.4.1",
     "pg": "^7.18.2",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^5.0.0",
     "uuid": "^7.0.2"
   },
   "devDependencies": {
