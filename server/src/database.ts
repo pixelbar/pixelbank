@@ -1,4 +1,4 @@
-import { MikroORM, RequestContext, EntityManager, EntityRepository, Options as MikroOptions } from 'mikro-orm';
+import { RequestContext, EntityManager, EntityRepository, MikroORM } from 'mikro-orm';
 import { config as dotenvConfig } from 'dotenv';
 import { Express } from 'express';
 import { User } from './models/user';
@@ -73,11 +73,12 @@ export async function seed(): Promise<void> {
 	await DI.productRepository.flush();
 }
 
-export async function configure(app: Express, inMemory: boolean = false): Promise<void> {
+export async function configure(app: Express, inMemory = false): Promise<void> {
 	dotenvConfig();
 
 	let forceReseed = false;
-	let config: any = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const config: any = {
 		entitiesDirs: ['./models'],
 		entitiesDirsTs: ['../src/models'],
 		baseDir: __dirname,
@@ -121,10 +122,10 @@ export async function configure(app: Express, inMemory: boolean = false): Promis
 	}
 }
 
-export function createContext(next: () => void) {
+export function createContext(next: () => void): void {
 	RequestContext.create(DI.orm.em, next);
 }
 
-export async function close() {
+export async function close(): Promise<void> {
 	await DI.orm.close();
 }

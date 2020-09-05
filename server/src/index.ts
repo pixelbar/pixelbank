@@ -8,7 +8,7 @@ import { configure as apiProductsConfigure } from './api/products';
 async function init() {
 	const app = express();
 	console.log('Configuring database...');
-	await databaseConfigure(app)
+	await databaseConfigure(app);
 	if (process.argv.some((a) => a == '--seed')) {
 		console.log('Seeding database');
 		await seedDatabase();
