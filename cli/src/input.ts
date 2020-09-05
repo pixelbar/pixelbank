@@ -1,5 +1,7 @@
 import * as readline from 'readline';
-require('dotenv').config();
+import { config } from 'dotenv';
+
+config();
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -8,7 +10,7 @@ const rl = readline.createInterface({
 
 export function prompt(question: string): Promise<string> {
 	return new Promise((resolve, reject) => {
-		rl.question(question, answer => {
+		rl.question(question, (answer) => {
 			if (answer.length === 0) {
 				reject('No input');
 			} else {

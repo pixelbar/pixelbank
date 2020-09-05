@@ -14,10 +14,7 @@ export class Payment {
 	@Property()
 	date: Date;
 
-	@OneToMany(
-		() => PaymentItem,
-		item => item.payment
-	)
+	@OneToMany(() => PaymentItem, (item) => item.payment)
 	items = new Collection<PaymentItem>(this);
 
 	constructor(user: User) {

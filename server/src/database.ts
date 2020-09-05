@@ -42,8 +42,8 @@ export async function seed(): Promise<void> {
 		if (line.length == 0 || line.startsWith('#')) continue;
 		const parts = line
 			.split(/(  |\t)/)
-			.map(v => v.trim())
-			.filter(v => !!v);
+			.map((v) => v.trim())
+			.filter((v) => !!v);
 		console.log(parts);
 		if (parts.length != 3) {
 			console.error('Could not insert');
@@ -82,7 +82,7 @@ export async function configure(app: Express): Promise<void> {
 		console.log('Missing .env variable DATABASE_URL');
 		console.log('Will use a temporary sqlite database. This should not be used in production');
 
-		await new Promise(res => unlink('pixelbank.sqlite', res));
+		await new Promise((res) => unlink('pixelbank.sqlite', res));
 
 		config = {
 			entitiesDirs: ['./models'],

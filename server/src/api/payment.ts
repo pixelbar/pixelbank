@@ -3,10 +3,11 @@ import { DI } from '../database';
 import { Product } from '../models/product';
 import { Payment } from '../models/payment';
 import { PaymentItem } from '../models/paymentItem';
+import { parseQueryAsInt } from '../utils';
 
 async function getUserPayments(req: Request, res: Response): Promise<void> {
 	const userName: string = req.params.userName;
-	const count: number = parseInt(req.query.count) || 100;
+	const count: number = parseQueryAsInt(req.query.count) || 100;
 
 	const user = await DI.userRepository.findOne({ name: userName });
 	if (user == null) {
@@ -84,7 +85,5 @@ async function addUserPayment(req: Request, res: Response): Promise<void> {
 }
 
 export function configure(e: Express): void {
-	e.route('/api/payments/:userName')
-		.get(getUserPayments)
-		.post(addUserPayment);
+	e.route('/api/payments/:userName').get(getUserPayments).post(addUserPayment);
 }

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ParsedQs } from 'qs';
 
 function extractRequestObject(req: Request, res: Response, fields: [string]): boolean {
 	if (typeof req.body != 'object' || req.body === null || req.body === undefined) {
@@ -14,4 +15,18 @@ function extractRequestObject(req: Request, res: Response, fields: [string]): bo
 	return true;
 }
 
-export { extractRequestObject };
+function parseQueryAsInt(query: undefined | string | string[] | ParsedQs | ParsedQs[]): number | null {
+	if (!query) {
+		return null;
+	}
+	if (typeof query == 'string') {
+		return parseInt(query) || null;
+	}
+	if (Array.isArray(query)) {
+		return parseQueryAsInt(query[0]);
+	}
+	// query is ParsedQs, which is an object of values
+	return null;
+}
+
+export { extractRequestObject, parseQueryAsInt };

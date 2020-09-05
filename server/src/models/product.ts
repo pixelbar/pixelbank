@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property } from 'mikro-orm';
-import uuid from 'uuid/v4';
+import uuid from 'uuid';
 
 @Entity()
 export class Product {
@@ -16,7 +16,7 @@ export class Product {
 	price: number;
 
 	constructor(code: string, name: string, price: number) {
-		this.id = uuid();
+		this.id = uuid.v4();
 		this.code = code;
 		this.name = name;
 		this.price = price;
