@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import * as api from './users';
 import { configure, createContext, close as cleanupDatabase, DI } from '../database';
 import { request, response } from '../utils/test';
 import { User } from '../models/user';
+import { expect, test } from '@jest/globals';
 
 test('User list', async (done) => {
 	await configure(true);
@@ -22,7 +25,7 @@ test('User list', async (done) => {
 
 		await cleanupDatabase();
 
-		done();
+		done!();
 	});
 });
 
@@ -47,7 +50,7 @@ test('Create user with valid body to succeed', async (done) => {
 
 		await cleanupDatabase();
 
-		done();
+		done!();
 	});
 });
 
@@ -79,7 +82,7 @@ test('Get user by name to succeed', async (done) => {
 		expect(user.user.name).toBe('Trangar');
 
 		await cleanupDatabase();
-		done();
+		done!();
 	});
 });
 
@@ -99,7 +102,7 @@ test('Get user by invalid name to not be found', async (done) => {
 		expect(user.user).toBe(null);
 
 		await cleanupDatabase();
-		done();
+		done!();
 	});
 });
 

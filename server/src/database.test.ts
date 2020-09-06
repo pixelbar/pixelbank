@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { configure, close, createContext, DI, registerMiddleware } from './database';
 import express from 'express';
+import { expect, test } from '@jest/globals';
 
 test('Inject express middleware', () => {
 	const app = express();
@@ -23,6 +26,6 @@ test('Valid database to be set up', async (done) => {
 		expect(await DI.productRepository.count()).toBeGreaterThan(0); // we should have some products
 
 		await close();
-		done();
+		done!();
 	});
 });
