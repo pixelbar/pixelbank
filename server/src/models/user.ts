@@ -1,6 +1,6 @@
 import { AnyEntity, Entity, PrimaryKey, Property, OneToMany, Collection } from 'mikro-orm';
-import uuid from 'uuid';
 import { Payment } from './payment';
+import { v4 } from 'uuid';
 
 @Entity()
 export class User implements AnyEntity<User, 'id'> {
@@ -17,7 +17,7 @@ export class User implements AnyEntity<User, 'id'> {
 	payments = new Collection<Payment>(this);
 
 	constructor(name: string) {
-		this.id = uuid.v4();
+		this.id = v4();
 		this.name = name;
 		this.balance = 0;
 	}

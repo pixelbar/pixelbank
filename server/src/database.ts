@@ -1,4 +1,4 @@
-import { MikroORM, RequestContext, EntityManager, EntityRepository, Options as MikroOptions } from 'mikro-orm';
+import { RequestContext, EntityManager, EntityRepository, MikroORM } from 'mikro-orm';
 import { config as dotenvConfig } from 'dotenv';
 import { Express } from 'express';
 import { User } from './models/user';
@@ -44,7 +44,7 @@ export async function seed(): Promise<void> {
 			.split(/(  |\t)/)
 			.map((v) => v.trim())
 			.filter((v) => !!v);
-		console.log(parts);
+
 		if (parts.length != 3) {
 			console.error('Could not insert');
 			continue;
@@ -73,37 +73,44 @@ export async function seed(): Promise<void> {
 	await DI.productRepository.flush();
 }
 
-export async function configure(app: Express): Promise<void> {
+export function registerMiddleware(app: Express): void {
+	// configure each express request to have a unique instance of MikroORM
+	app.use((_req, _res, next) => {
+		createContext(next);
+	});
+}
+
+export async function configure(inMemory = false): Promise<void> {
 	dotenvConfig();
 
-	let config: MikroOptions;
 	let forceReseed = false;
-	if (!process.env.DATABASE_URL) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const config: any = {
+		entitiesDirs: ['./models'],
+		entitiesDirsTs: ['../src/models'],
+		baseDir: __dirname,
+		autoFlush: false,
+	};
+
+	if (inMemory) {
+		config.type = 'sqlite';
+		config.dbName = ':memory:';
+
+		forceReseed = true;
+	} else if (!process.env.DATABASE_URL) {
 		console.log('Missing .env variable DATABASE_URL');
 		console.log('Will use a temporary sqlite database. This should not be used in production');
 
 		await new Promise((res) => unlink('pixelbank.sqlite', res));
+		config.type = 'sqlite';
+		config.dbName = 'pixelbank.sqlite';
+		config.debug = true;
 
-		config = {
-			entitiesDirs: ['./models'],
-			entitiesDirsTs: ['../src/models'],
-			baseDir: __dirname,
-			autoFlush: false,
-			type: 'sqlite',
-			dbName: 'pixelbank.sqlite',
-			debug: true,
-		};
 		forceReseed = true;
 	} else {
-		config = {
-			entitiesDirs: ['./models'],
-			entitiesDirsTs: ['../src/models'],
-			baseDir: __dirname,
-			autoFlush: false,
-			dbName: 'pixelbank',
-			type: 'postgresql',
-			clientUrl: process.env.DATABASE_URL,
-		};
+		config.type = 'postgresql';
+		config.dbName = 'pixelbank';
+		config.clientUrl = process.env.DATABASE_URL;
 	}
 
 	const orm = await MikroORM.init(config);
@@ -111,13 +118,15 @@ export async function configure(app: Express): Promise<void> {
 	DI.orm = orm;
 	DI.em = DI.orm.em;
 	configureDIRepositories();
-
-	// configure each express request to have a unique instance of MikroORM
-	app.use((req, res, next) => {
-		RequestContext.create(DI.orm.em, next);
-	});
-
 	if (forceReseed) {
 		await seed();
 	}
+}
+
+export function createContext(next: () => void): void {
+	RequestContext.create(DI.orm.em, next);
+}
+
+export async function close(): Promise<void> {
+	await DI.orm.close();
 }

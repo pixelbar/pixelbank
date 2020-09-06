@@ -20,7 +20,9 @@ function parseQueryAsInt(query: undefined | string | string[] | ParsedQs | Parse
 		return null;
 	}
 	if (typeof query == 'string') {
-		return parseInt(query) || null;
+		const result = parseInt(query);
+		if (isNaN(result)) return null;
+		return result;
 	}
 	if (Array.isArray(query)) {
 		return parseQueryAsInt(query[0]);

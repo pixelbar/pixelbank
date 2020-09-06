@@ -21,3 +21,10 @@ jobs:
       working-directory: server
     - run: npm run lint
       working-directory: server
+    - run: npm run test
+      working-directory: server
+    - uses: codecov/codecov-action@v1
+      with:
+        files: ./server/coverage/clover.xml
+        name: server
+        fail_ci_if_error: true

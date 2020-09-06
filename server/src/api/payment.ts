@@ -5,9 +5,15 @@ import { Payment } from '../models/payment';
 import { PaymentItem } from '../models/paymentItem';
 import { parseQueryAsInt } from '../utils';
 
-async function getUserPayments(req: Request, res: Response): Promise<void> {
+export async function getUserPayments(req: Request, res: Response): Promise<void> {
+	if (!req.params || !req.params.userName) {
+		res.sendStatus(400);
+		return;
+	}
 	const userName: string = req.params.userName;
-	const count: number = parseQueryAsInt(req.query.count) || 100;
+	const __count = req.query ? req.query.count : undefined;
+	const _count = parseQueryAsInt(__count);
+	const count = _count == null || _count < 0 ? 100 : _count;
 
 	const user = await DI.userRepository.findOne({ name: userName });
 	if (user == null) {
@@ -33,10 +39,16 @@ interface AddUserPaymentBody {
 	products: string[];
 }
 
-async function addUserPayment(req: Request, res: Response): Promise<void> {
+export async function addUserPayment(req: Request, res: Response): Promise<void> {
+	if (!req.params || !req.params.userName || !req.body) {
+		res.sendStatus(400);
+		return;
+	}
 	const userName: string = req.params.userName;
 	const body = req.body as AddUserPaymentBody;
-	if (!Array.isArray(body.products)) {
+	if (!body.products || !Array.isArray(body.products)) {
+		console.log('Setting status and json');
+		res.status(400);
 		res.json({
 			error: "Missing required field 'products'",
 		});
@@ -45,6 +57,7 @@ async function addUserPayment(req: Request, res: Response): Promise<void> {
 
 	const user = await DI.userRepository.findOne({ name: userName });
 	if (user == null) {
+		res.status(400);
 		res.json({
 			error: `User '${user}' not found`,
 		});
@@ -58,6 +71,7 @@ async function addUserPayment(req: Request, res: Response): Promise<void> {
 			$or: [{ id: productCodeOrId }, { code: productCodeOrId }],
 		});
 		if (product == null) {
+			res.status(400);
 			res.json({
 				error: `Could not find product which has code or id ${productCodeOrId}`,
 			});
