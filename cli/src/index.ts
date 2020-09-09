@@ -34,7 +34,6 @@ async function handleInput(input: string): Promise<void> {
 }
 
 async function promptInput(): Promise<void> {
-	console.log(process.env);
 	while (true) {
 		try {
 			const input = await prompt('Product ID, amount or command: ');

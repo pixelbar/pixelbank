@@ -4,6 +4,7 @@ import { Express } from 'express';
 import { User } from './models/user';
 import { Product } from './models/product';
 import { Payment } from './models/payment';
+import { Transaction } from './models/transaction';
 import { readFile, unlink } from 'fs';
 import { PaymentItem } from './models/paymentItem';
 
@@ -13,12 +14,14 @@ export const DI = {} as {
 	userRepository: EntityRepository<User>;
 	productRepository: EntityRepository<Product>;
 	paymentRepository: EntityRepository<Payment>;
+	transactionRepository: EntityRepository<Transaction>;
 };
 
 function configureDIRepositories(): void {
 	DI.userRepository = DI.orm.em.getRepository(User);
 	DI.productRepository = DI.orm.em.getRepository(Product);
 	DI.paymentRepository = DI.orm.em.getRepository(Payment);
+	DI.transactionRepository = DI.orm.em.getRepository(Transaction);
 }
 
 export async function seed(): Promise<void> {
