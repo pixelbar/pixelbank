@@ -1,9 +1,9 @@
-import { AnyEntity, Entity, PrimaryKey, Property, OneToMany, Collection } from 'mikro-orm';
+import { Entity, PrimaryKey, Property, OneToMany, Collection } from 'mikro-orm';
 import { Payment } from './payment';
 import { v4 } from 'uuid';
 
 @Entity()
-export class User implements AnyEntity<User, 'id'> {
+export class User {
 	@PrimaryKey()
 	id: string;
 
