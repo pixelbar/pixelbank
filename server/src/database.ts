@@ -86,8 +86,7 @@ export async function configure(inMemory = false): Promise<void> {
 	let forceReseed = false;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const config: any = {
-		entitiesDirs: ['./models'],
-		entitiesDirsTs: ['../src/models'],
+        entities: [Payment, PaymentItem, Product, User],
 		baseDir: __dirname,
 		autoFlush: false,
 	};

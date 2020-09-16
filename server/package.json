@@ -19,12 +19,13 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mikro-orm": "^3.6.15",
+    "mikro-orm": "^4.0.0",
     "pg": "^8.3.3",
     "sqlite3": "^5.0.0",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@mikro-orm/sqlite": "^4.0.3",
     "@types/cors": "^2.8.7",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.8",
