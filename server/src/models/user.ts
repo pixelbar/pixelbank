@@ -1,4 +1,4 @@
-import { AnyEntity, Entity, PrimaryKey, Property, OneToMany, Collection } from 'mikro-orm';
+import { Entity, PrimaryKey, Property, OneToMany, Collection } from 'mikro-orm';
 import { Payment } from './payment';
 import { v4 } from 'uuid';
 
