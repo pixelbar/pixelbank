@@ -6,6 +6,7 @@ import { Product } from './models/product';
 import { Payment } from './models/payment';
 import { readFile, unlink } from 'fs';
 import { PaymentItem } from './models/paymentItem';
+import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 export const DI = {} as {
 	orm: MikroORM;
@@ -86,8 +87,8 @@ export async function configure(inMemory = false): Promise<void> {
 	let forceReseed = false;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const config: any = {
-		entitiesDirs: ['./models'],
-		entitiesDirsTs: ['../src/models'],
+		metadataProvider: TsMorphMetadataProvider,
+		entities: [Payment, PaymentItem, Product, User],
 		baseDir: __dirname,
 		autoFlush: false,
 	};
